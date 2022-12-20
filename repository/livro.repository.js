@@ -1,5 +1,6 @@
 import livrosModel from "../models/livros.model.js";
 import autoresModel from "../models/autores.model.js";
+
 //arquivo repsonsavel por fazer interações com banco de dados
 
 async function criaLivro(livro) {
@@ -54,16 +55,19 @@ async function buscaLivrosPorAutor(autorId) {
       include: [
         {
           model: autoresModel,
-          where:{
-            autorId : autorId
-          }
-        }
-      ]
-    })
+          where: {
+            autorId: autorId,
+          },
+        },
+      ],
+    });
   } catch (err) {
     throw err;
   }
 }
+
+
+
 export default {
   criaLivro,
   atualizaLivro,

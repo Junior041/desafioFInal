@@ -1,26 +1,30 @@
 //responsavel por chamar o repository, e fazer regras de negocio
 import autoresRepository from "../repository/autor.repository.js";
-
-async function criaAutor(cliente) {
-  return await autoresRepository.criaAutor(cliente);
+import livroRepository from "../repository/livro.repository.js";
+async function criaAutor(autor) {
+  return await autoresRepository.criaAutor(autor);
 }
 
-async function atualizaAutor(cliente) {
-  return await autoresRepository.atualizaAutor(cliente);
+async function atualizaAutor(autor) {
+  return await autoresRepository.atualizaAutor(autor);
 }
-async function deleteAutor(clienteId) {
-  return await autoresRepository.deleteAutor(clienteId);
+async function deleteAutor(autorId) {
+  if (await livroRepository.buscaLivrosPorAutor(autorId)) {
+    throw new Error(`Autor ${autorId} possui livro atribuido`);
+  } else {
+    return await autoresRepository.deleteAutor(autorId);
+  }
 }
 async function buscaAutores() {
   return await autoresRepository.buscaAutores();
 }
-async function buscaAutor(clienteId) {
-  return await autoresRepository.buscaAutor(clienteId);
+async function buscaAutor(autorId) {
+  return await autoresRepository.buscaAutor(autorId);
 }
 export default {
   criaAutor,
   atualizaAutor,
   buscaAutores,
   deleteAutor,
-  buscaAutor
+  buscaAutor,
 };

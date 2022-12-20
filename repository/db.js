@@ -1,6 +1,6 @@
-import Sequelize from "sequelize";
+import Sequelize from "sequelize"; 
 
-const sequelize = new Sequelize('mydb','root','',{
+const sequelize = new Sequelize('mydb','root','1508',{
   host:"localhost",
   dialect:"mysql",
   define:{
@@ -8,9 +8,9 @@ const sequelize = new Sequelize('mydb','root','',{
   }
 });
 
-//verifica conexao
-//sequelize.authenticate().then(()=>{
-//  console.log(`conectado`);
-//}).catch(err => console.log(err))
+// verifica conexao
+// sequelize.authenticate().then(()=>{
+//   console.log(`conectado`);
+// }).catch(err => console.log(err))
 
 export default  sequelize ;
