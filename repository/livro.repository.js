@@ -42,9 +42,9 @@ async function buscaLivros() {
     throw err;
   }
 }
-async function buscaLivro(clientId) {
+async function buscaLivro(livroId) {
   try {
-    return await livrosModel.findByPk(clientId);
+    return await livrosModel.findByPk(livroId);
   } catch (err) {
     throw err;
   }

@@ -4,6 +4,7 @@ import winston from "winston";
 import clientesRoputes from "./routes/clientes.routes.js";
 import autoresRoutes from "./routes/autor.routes.js";
 import livroRoutes from "./routes/livro.routes.js";
+import vendaRoutes from "./routes/venda.routes.js";
 
 const { combine, timestamp, label, printf } = winston.format;
 
@@ -28,6 +29,7 @@ app.use(express.json());
 app.use("/clientes", clientesRoputes);
 app.use("/autor", autoresRoutes);
 app.use("/livro", livroRoutes);
+app.use("/venda", vendaRoutes);
 
 app.use((err, req, res, next) => {
   logger.error(` ${req.method} ${req.baseUrl} - ${err.message}`);

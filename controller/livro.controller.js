@@ -6,10 +6,9 @@ async function criaLivro(req, res, next) {
     if (livro.valor < 0) {
       throw new Error("valor tem que ser um numero, e tem que ser maior que 0");
     }
-    if (!livro.nome || !livro.valor || !livro.autorId) {
-      throw new Error("nome, valor, autorid e endereco são obrigatorios.");
+    if (!livro.nome || !livro.valor || !livro.estoque || !livro.autorId) {
+      throw new Error("nome, valor, estoque, autorid e endereco são obrigatorios.");
     } else {
-      livro.estoque = 0;
       res.send(await livrosService.criaLivro(livro));
       global.logger.info(`POST /livro - Cria livro `);
     }
@@ -117,14 +116,34 @@ async function adicionaAvaliacao(req, res, next) {
   try {
     let livroId = req.params.livroId;
     const avaliacaoBody = req.body;
-    if (!avaliacaoBody.nome || !avaliacaoBody.nota || !avaliacaoBody.avaliacao) {
+    if (
+      !avaliacaoBody.nome ||
+      !avaliacaoBody.nota ||
+      !avaliacaoBody.avaliacao
+    ) {
       throw new Error(`nome, nota e avaliacaoBody sao obrigatorios`);
     } else {
       let livro = await livrosService.buscaLivroInfo(livroId);
-      livro.avaliacoes.push(avaliacaoBody)
-      
-      res.send(await livrosService.adicionaAvaliacao(livroId,livro));
+      livro.avaliacoes.push(avaliacaoBody);
+
+      res.send(await livrosService.adicionaAvaliacao(livroId, livro));
     }
+  } catch (err) {
+    next(err);
+  }
+}
+async function deletaAvaliacao(req, res, next) {
+  try {
+    let livroId = req.params.livroId;
+    let avaliacaoIndex = req.params.avaliacaoIndex;
+    if (!avaliacaoIndex || !livroId) {
+      throw new Error(`idlivro e idavaliacao são obrigatorios`)
+    }else{
+      let livro = await livrosService.buscaLivroInfo(livroId)
+      livro.avaliacoes = livro.avaliacoes.filter(dado => dado != livro.avaliacoes[avaliacaoIndex])
+      res.send(await livrosService.deletaAvaliacao(livroId, livro))
+    }
+  
   } catch (err) {
     next(err);
   }
@@ -140,4 +159,5 @@ export default {
   atualizaLivroInfo,
   deletaLivroInfo,
   adicionaAvaliacao,
+  deletaAvaliacao,
 };

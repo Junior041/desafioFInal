@@ -1,4 +1,4 @@
-import db from "../repositories/db.js";
+import db from "../repository/db.js";
 import Sequelize from "sequelize";
 import Cliente from "./clientes.model.js";
 import Livros from "./livros.model.js";
@@ -23,7 +23,7 @@ const Vendas = db.define(
   },
   { underscored: true }
 );
-Vendas.belongsTo(Cliente, {foreignKey: "clienteId"})
 Vendas.belongsTo(Livros, {foreignKey: "livroId"})
+Vendas.belongsTo(Cliente, {foreignKey: "clienteId"})
 
 export default Vendas;

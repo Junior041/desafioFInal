@@ -47,7 +47,10 @@ async function adicionaAvaliacao(livroId, livro) {
   const client = getClient();
   try {
     await client.connect();
-    await client.db("desafio").collection("livroInfo").updateOne({ livroId: livroId }, { $set: { ...livro } });
+    await client
+      .db("desafio")
+      .collection("livroInfo")
+      .updateOne({ livroId: livroId }, { $set: { ...livro } });
   } catch (err) {
     throw err;
   } finally {
@@ -55,11 +58,29 @@ async function adicionaAvaliacao(livroId, livro) {
   }
 }
 
-async function buscaLivroInfo(livroId){
+async function buscaLivroInfo(livroId) {
   const client = getClient();
   try {
     await client.connect();
-    return await client.db("desafio").collection("livroInfo").findOne({ livroId: livroId });
+    return await client
+      .db("desafio")
+      .collection("livroInfo")
+      .findOne({ livroId: livroId });
+  } catch (err) {
+    throw err;
+  } finally {
+    await client.close();
+  }
+}
+
+async function deletaAvaliacao(livroId) {
+  const client = getClient();
+  try {
+    await client.connect();
+    return await client
+      .db("desafio")
+      .collection("livroInfo")
+      .findOne({ livroId: livroId });
   } catch (err) {
     throw err;
   } finally {
@@ -73,4 +94,5 @@ export default {
   deletaLivroInfo,
   adicionaAvaliacao,
   buscaLivroInfo,
+  deletaAvaliacao,
 };
