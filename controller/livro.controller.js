@@ -1,5 +1,6 @@
 //arquivo responsavel pela verificacao de parametros
 import livrosService from "../service/livro.service.js";
+
 async function criaLivro(req, res, next) {
   try {
     const livro = req.body;
@@ -9,6 +10,7 @@ async function criaLivro(req, res, next) {
     if (!livro.nome || !livro.valor || !livro.estoque || !livro.autorId) {
       throw new Error("nome, valor, estoque, autorid e endereco são obrigatorios.");
     } else {
+      console.log("1entro");
       res.send(await livrosService.criaLivro(livro));
       global.logger.info(`POST /livro - Cria livro `);
     }

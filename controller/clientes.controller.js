@@ -23,6 +23,7 @@ async function criaCliente(req, res, next) {
     next(err);
   }
 }
+
 async function atualizaCliente(req, res, next) {
   try {
     const cliente = req.body;
@@ -54,6 +55,7 @@ async function deleteCliente(req, res, next) {
     next(err);
   }
 }
+
 async function buscaClientes(req, res, next) {
   try {
     const response = await clientesService.buscaClientes();
@@ -72,6 +74,7 @@ async function buscaCliente(req, res, next) {
     next(err);
   }
 }
+
 export default {
   criaCliente,
   atualizaCliente,
